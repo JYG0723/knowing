@@ -61,6 +61,9 @@ public class HomeController {
         return "index";
     }
 
+    /**
+     * 查看某个用户的主页
+     */
     @RequestMapping(path = {"/user/{userId}"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String userIndex(Model model, @PathVariable("userId") int userId) {
         model.addAttribute("vos", getQuestions(userId, 0, 10));

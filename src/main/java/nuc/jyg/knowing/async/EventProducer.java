@@ -18,7 +18,7 @@ public class EventProducer {
 
     public boolean fireEvent(EventModel eventModel) {
         try {
-            // TODO 拿到事件队列 并推送
+            // 拿到事件队列 并序列化该EventModel 推送到队列中
             String json = JSONObject.toJSONString(eventModel);
             String key = RedisKeyUtil.getEventQueueKey();
             jedisAdapter.lpush(key, json);

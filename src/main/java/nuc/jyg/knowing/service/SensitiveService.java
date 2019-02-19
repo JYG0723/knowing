@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * @author Ji YongGuang.
- * @date  2017/11/24.
+ * @date 2017/11/24.
  */
 @Service
 public class SensitiveService implements InitializingBean {
@@ -29,12 +29,10 @@ public class SensitiveService implements InitializingBean {
 
 
     private class TrieNode {
-
         /**
          * true 关键词的终结 ； false 继续
          */
         private boolean end = false;
-
         /**
          * Map中存储的是子字符的集合 key下一个字符，value是对应的节点
          */
@@ -47,9 +45,10 @@ public class SensitiveService implements InitializingBean {
             subNodes.put(key, node);
         }
 
-        /**                                                    (鬼,Node)
+        /**
+         * (鬼,Node)
          * 获取每个节点下的字典树中  key对应的value节点。  色 ->  (情,Node)
-         *                                                      (魔,Node)
+         * (魔,Node)
          */
         TrieNode getSubNode(Character key) {
             return subNodes.get(key);
@@ -66,16 +65,12 @@ public class SensitiveService implements InitializingBean {
         public int getSubNodeCount() {
             return subNodes.size();
         }
-
-
     }
-
 
     /**
      * 根节点
      */
     private TrieNode rootNode = new TrieNode();
-
 
     /**
      * 判断是否是一个符号
@@ -89,10 +84,12 @@ public class SensitiveService implements InitializingBean {
     /**
      * 过滤 敏感词
      * <p>
-     * 1、如果过滤的文本是空文本直接结束，否则直接从移动指针的位置取第一个元素开始与前缀树中的节点进行比较，如果比较字符串 position 节点处的元素在前缀树中仍存在的话，那么前缀树的当前定位节点 tempNode 节点移到指针到该节点，并继续字符串的下一次笔记。
-     * 2、对该文本的每个字符进行迭代过滤，如果是非法字符调用isSymbol进行过滤。如果该非法字符并不掺杂在已被判定的敏感字符后(即前缀树的tempNode仍旧指向rootNode)，那么将该非法字符添加到结果集StringBuilder的result对象中。否则即该非法字符掺杂在敏感词中(你好X色**情XX)，比如这里的**，我们需要跳过这次循环，并不将该非法字符添加到结果集中。并继续将比较指针向后移动一位。
+     * 1、如果过滤的文本是空文本直接结束，否则直接从移动指针的位置取第一个元素开始与前缀树中的节点进行比较，如果比较字符串 position 节点处的元素在前缀树中仍存在的话，那么前缀树的当前定位节点 tempNode
+     * 节点移到指针到该节点，并继续字符串的下一次笔记。
+     * 2、对该文本的每个字符进行迭代过滤，如果是非法字符调用isSymbol进行过滤。如果该非法字符并不掺杂在已被判定的敏感字符后(即前缀树的tempNode仍旧指向rootNode)
+     * ，那么将该非法字符添加到结果集StringBuilder的result对象中。否则即该非法字符掺杂在敏感词中(你好X色**情XX)
+     * ，比如这里的**，我们需要跳过这次循环，并不将该非法字符添加到结果集中。并继续将比较指针向后移动一位。
      * 3、
-     *
      * </p>
      */
     public String filter(String text) {
@@ -109,9 +106,9 @@ public class SensitiveService implements InitializingBean {
 
         while (position < text.length()) {
             char c = text.charAt(position);
-            // 空格直接跳过
+            // 空格直接跳过敏感词判断 // hi   你好色 情
             if (isSymbol(c)) {
-                if (tempNode == rootNode) {
+                if (tempNode == rootNode) {// 如果空格出现在正常文字中
                     result.append(c);
                     ++begin;
                 }
@@ -181,7 +178,6 @@ public class SensitiveService implements InitializingBean {
                 tempNode.setKeywordEnd(true);
             }
         }
-//        System.out.println(UUID.randomUUID().toString());
     }
 
 

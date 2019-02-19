@@ -49,8 +49,10 @@ public class MessageController {
         for (Message message : conversationList) {
             ViewObject vo = new ViewObject();
             vo.set("message", message);
+            // 对方头像
             int targetId = message.getFromId() == localUserId ? message.getToId() : message.getFromId();
             vo.set("user", userService.getUser(targetId));
+            // 该对话的未读数
             vo.set("unread", messageService.getConversationUnreadCount(localUserId, message.getConversationId()));
             conversations.add(vo);
         }
@@ -63,7 +65,7 @@ public class MessageController {
         try {
             List<Message> messageList = messageService.getConversationDetail(conversationId, 0, 10);
             List<ViewObject> messages = new ArrayList<ViewObject>();
-            for (Message message : messageList) {
+            for (Message message : messageList) {// 0 - 10 对话出来的顺序是早到晚
                 ViewObject vo = new ViewObject();
                 vo.set("message", message);
                 vo.set("user", userService.getUser(message.getFromId()));

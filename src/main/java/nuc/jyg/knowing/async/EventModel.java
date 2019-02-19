@@ -10,7 +10,7 @@ import java.util.Map;
 public class EventModel {
 
     /**
-     * 事件类型
+     * 事件类型，及什么动作触发的新鲜事
      */
     private EventType type;
     /**

@@ -64,9 +64,10 @@ public class Message {
     }
 
     public String getConversationId() {
+        // 这样整个conversationId就定了，根据两个对话的用户Id大小来定。用户id小的在前
         if (fromId < toId) {
             return String.format("%d_%d", fromId, toId);
-        } else {
+        } else {// toId < fromId
             return String.format("%d_%d", toId, fromId);
         }
     }

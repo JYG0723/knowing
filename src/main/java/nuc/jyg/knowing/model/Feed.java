@@ -6,14 +6,20 @@ import java.util.Date;
 
 /**
  * @author Ji YongGuang.
- * @date  2017/11/12.
+ * @date 2017/11/12.
  */
 public class Feed {
+
     private int id;
+    // 新鲜事的类型 关注，评论等
     private int type;
+    // 谁发出的新鲜事
     private int userId;
+    // 新鲜事创建时间
     private Date createdDate;
+    // 新鲜事的核心数据
     private String data;
+    // 核心数据对应的Json串
     private JSONObject dataJSON = null;
 
     public int getId() {
@@ -56,6 +62,7 @@ public class Feed {
         this.data = data;
         dataJSON = JSONObject.parseObject(data);
     }
+
     public String get(String key) {
         return dataJSON == null ? null : dataJSON.getString(key);
     }

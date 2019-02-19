@@ -109,6 +109,8 @@ public class QuestionController {
             } else {
                 question.setUserId(hostHolder.getUser().getId());
             }
+
+            // 新添加的问题 异步的添加到Solr索引中
             if (questionService.addQuestion(question) > 0) {
                 eventProducer.fireEvent(new EventModel(EventType.ADD_QUESTION)
                         .setActorId(question.getUserId()).setEntityId(question.getId())

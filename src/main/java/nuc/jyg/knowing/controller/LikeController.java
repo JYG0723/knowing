@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Ji YongGuang.
- * @date   2017/11/30.
+ * @date 2017/11/30.
  */
 @Controller
 public class LikeController {
@@ -43,10 +43,11 @@ public class LikeController {
 
         Comment comment = commentService.getCommentById(commentId);
 
+        // 相当于往redis的list结构中存了个数据而已
         eventProducer.fireEvent(new EventModel(EventType.LIKE)
                 .setActorId(hostHolder.getUser().getId()).setEntityId(commentId)
                 .setEntityType(EntityType.ENTITY_COMMENT).setEntityOwnerId(comment.getUserId())
-                .setExt("questionId", String.valueOf(comment.getEntityId())));
+                .setExt("questionId", String.valueOf(comment.getEntityId())));// 方便用户找到对应的问题下的评论
 
         // 评论
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId);

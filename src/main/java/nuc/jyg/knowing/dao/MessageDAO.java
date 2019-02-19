@@ -30,7 +30,7 @@ public interface MessageDAO {
     List<Message> getConversationList(@Param("userId") int userId,
                                       @Param("offset") int offset,
                                       @Param("limit") int limit);
-
+    // to_id 即发给本人的几条未读
     @Select({"select count(id) from ", TABLE_NAME, " where has_read=0 and to_id=#{userId} and conversation_id=#{conversationId}"})
     int getConversationUnreadCount(@Param("userId") int userId, @Param("conversationId") String conversationId);
 }
